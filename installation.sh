@@ -1,6 +1,6 @@
 !/usr/bin/bash
 # ─────────────────────────────────────────────
-# LocalTune Installer (Python + dependencias)
+#     LocalTune Installer (Python + dependencias)
 # ─────────────────────────────────────────────
 
 set -e
@@ -15,14 +15,14 @@ elif command -v pacman >/dev/null 2>&1; then
 elif command -v dnf >/dev/null 2>&1; then
     PKG_MANAGER="dnf"
 else
-    echo "❌ No se detectó un gestor de paquetes compatible"
+    echo "No se detectó un gestor de paquetes compatible"
     exit 1
 fi
 
-echo "📦 Usando gestor: $PKG_MANAGER"
+echo "Usando gestor.... $PKG_MANAGER"
 
 # ─────────────────────────────────────────────
-# Dependencias del sistema (pygame/audio/tkinter)
+#         Dependencias del sistema (pygame/audio/tkinter)
 # ─────────────────────────────────────────────
 
 if [ "$PKG_MANAGER" = "apt" ]; then
@@ -50,7 +50,7 @@ elif [ "$PKG_MANAGER" = "dnf" ]; then
 fi
 
 # ─────────────────────────────────────────────
-# Entorno virtual (recomendado)
+#         Entorno virtual (recomendado)
 # ─────────────────────────────────────────────
 
 echo "Creando entorno virtual..."
@@ -60,7 +60,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # ─────────────────────────────────────────────
-# Actualizar pip
+#                 Actualizar pip
 # ─────────────────────────────────────────────
 
 pip install --upgrade pip setuptools wheel
@@ -78,11 +78,11 @@ pip install pygame mutagen pillow
 # ─────────────────────────────────────────────
 
 echo ""
-echo " Instalación completada"
-echo " Activa el entorno con:"
+echo "[+] Instalación completada :))"
+echo "[+] Activa el entorno con:"
 echo "   source .venv/bin/activate"
 echo ""
-echo " Ejecuta tu programa con:"
+echo "[+] Y ejecutalo con:"
 echo "   python L0calT8ne.py"
 
 
