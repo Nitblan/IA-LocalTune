@@ -1,4 +1,4 @@
-"""
+                """
 LocalTune — reproductor local estilo Spotify
 Compatible con Python 3.14+
 Requiere:  pip install pygame mutagen pillow
@@ -24,13 +24,13 @@ from mutagen.id3 import ID3, APIC
 from PIL import Image, ImageTk, ImageDraw
 
 # ══════════════════════════════════════════════════════════════
-#  PYGAME AUDIO
+#                          PYGAME AUDIO
 # ══════════════════════════════════════════════════════════════
 pygame.mixer.pre_init(44100, -16, 2, 2048)
 pygame.mixer.init()
 
 # ══════════════════════════════════════════════════════════════
-#  TEMA
+#                                  TEMA
 # ══════════════════════════════════════════════════════════════
 T: dict[str, str] = {
     "BG_DARK":    "#0D0D0D",
@@ -63,13 +63,13 @@ F_BTN    = ("Helvetica", 18, "bold")
 DATA_FILE: str = os.path.join(os.path.expanduser("~"), ".localtune_data.json")
 
 # ══════════════════════════════════════════════════════════════
-#  TYPE ALIASES  (sintaxis 'type' disponible desde Python 3.12)
+#          TYPE ALIASES  (sintaxis 'type' disponible desde Python 3.12)
 # ══════════════════════════════════════════════════════════════
 type Song      = dict[str, object]
 type PlaylistMap = dict[str, list[int]]
 
 # ══════════════════════════════════════════════════════════════
-#  ESTADO CENTRAL
+#                          ESTADO CENTRAL
 # ══════════════════════════════════════════════════════════════
 class State:
     songs:         list[Song]    = []
@@ -88,7 +88,7 @@ class State:
 S = State()
 
 # ══════════════════════════════════════════════════════════════
-#  PERSISTENCIA
+#                                  PERSISTENCIA
 # ══════════════════════════════════════════════════════════════
 def save_data() -> None:
     data = {
@@ -122,7 +122,7 @@ def load_data() -> None:
         pass
 
 # ══════════════════════════════════════════════════════════════
-#  HELPERS
+#                                  HELPERS
 # ══════════════════════════════════════════════════════════════
 def fmt(secs: float) -> str:
     secs = max(0, int(secs))
@@ -173,7 +173,7 @@ def photo_from_file(path: str, size: tuple[int, int] = (220, 220)) -> ImageTk.Ph
     return ImageTk.PhotoImage(img)
 
 # ══════════════════════════════════════════════════════════════
-#  REPRODUCCIÓN
+#                          REPRODUCCIÓN
 # ══════════════════════════════════════════════════════════════
 def load_and_play(idx: int, offset: float = 0.0) -> None:
     if not (0 <= idx < len(S.songs)):
@@ -323,7 +323,7 @@ def toggle_like() -> None:
     _refresh_list()
 
 # ══════════════════════════════════════════════════════════════
-#  BIBLIOTECA
+#                              BIBLIOTECA
 # ══════════════════════════════════════════════════════════════
 def import_files() -> None:
     paths = filedialog.askopenfilenames(
@@ -416,7 +416,7 @@ def set_cover_for_song() -> None:
     save_data()
 
 # ══════════════════════════════════════════════════════════════
-#  BÚSQUEDA / FILTRO
+#                      BÚSQUEDA / FILTRO
 # ══════════════════════════════════════════════════════════════
 _SEARCH_PH = "  🔍  Buscar en tu biblioteca…"
 
@@ -445,7 +445,7 @@ def show_favorites() -> None:
     _refresh_list()
 
 # ══════════════════════════════════════════════════════════════
-#  PLAYLISTS
+#                              PLAYLISTS
 # ══════════════════════════════════════════════════════════════
 def new_playlist() -> None:
     name = simpledialog.askstring(
@@ -475,7 +475,7 @@ def _add_playlist_btn(name: str) -> None:
         command=lambda n=name: _load_playlist(n),
     )
     btn.pack(fill="x")
-    # Clic derecho → eliminar
+                                                        # Clic derecho → eliminar
     btn.bind("<Button-3>",
              lambda e, n=name, b=btn: _delete_playlist(n, b))
 
@@ -549,7 +549,7 @@ def add_to_playlist() -> None:
               cursor="hand2", command=confirm).pack(pady=12)
 
 # ══════════════════════════════════════════════════════════════
-#  COLA
+#                             COLA
 # ══════════════════════════════════════════════════════════════
 def open_queue() -> None:
     win = tk.Toplevel(root)
@@ -588,7 +588,7 @@ def open_queue() -> None:
         if ri == S.current_index:
             lb.itemconfig(tk.END, fg=T["ACCENT"])
 
-    def on_dbl(e: tk.Event) -> None:  # type: ignore[type-arg]
+    def on_dbl(e: tk.Event) -> None:                      # type: ignore[type-arg]
         sel2 = lb.curselection()
         if sel2:
             load_and_play(order[sel2[0]])
@@ -597,7 +597,7 @@ def open_queue() -> None:
     lb.bind("<Double-Button-1>", on_dbl)
 
 # ══════════════════════════════════════════════════════════════
-#  ECUALIZADOR
+#                                                                                  ECUALIZADOR
 # ══════════════════════════════════════════════════════════════
 def open_equalizer() -> None:
     win = tk.Toplevel(root)
@@ -631,7 +631,7 @@ def open_equalizer() -> None:
     ).pack(pady=6)
 
 # ══════════════════════════════════════════════════════════════
-#  INFO DE CANCIÓN
+#                          INFO DE CANCIÓN
 # ══════════════════════════════════════════════════════════════
 def song_info() -> None:
     if S.current_index == -1:
@@ -665,7 +665,7 @@ def song_info() -> None:
                  anchor="w", wraplength=270).pack(side="left")
 
 # ══════════════════════════════════════════════════════════════
-#  AJUSTES
+#                              AJUSTES
 # ══════════════════════════════════════════════════════════════
 def open_settings() -> None:
     win = tk.Toplevel(root)
@@ -678,7 +678,7 @@ def open_settings() -> None:
              font=F_TITLE, bg=T["BG_PANEL"],
              fg=T["TEXT_MAIN"]).pack(pady=16)
 
-    # Color de acento ─────────────────────────
+                                                                        # Color de acento ─────────────────────────
     row1 = tk.Frame(win, bg=T["BG_PANEL"])
     row1.pack(fill="x", padx=24, pady=6)
     tk.Label(row1, text="Color de acento:",
@@ -703,7 +703,7 @@ def open_settings() -> None:
               bd=0, relief="flat", padx=8, pady=4,
               cursor="hand2", command=pick_accent).pack(side="left")
 
-    # Tema ────────────────────────────────────
+                                                                            # Tema ────────────────────────────────────
     row2 = tk.Frame(win, bg=T["BG_PANEL"])
     row2.pack(fill="x", padx=24, pady=6)
     tk.Label(row2, text="Tema:", font=F_ARTIST,
@@ -759,7 +759,7 @@ def open_settings() -> None:
               cursor="hand2",
               command=pick_folder_settings).pack(side="left")
 
-    # Atajos ──────────────────────────────────
+                                                                            # Atajos ──────────────────────────────────
     tk.Label(win, text="Atajos de teclado", font=F_NAV,
              bg=T["BG_PANEL"],
              fg=T["TEXT_MAIN"]).pack(anchor="w", padx=24, pady=(14, 4))
@@ -781,7 +781,7 @@ def open_settings() -> None:
               cursor="hand2", command=win.destroy).pack(pady=16)
 
 # ══════════════════════════════════════════════════════════════
-#  IMPORTAR SPOTIFY
+#                          IMPORTAR SPOTIFY
 # ══════════════════════════════════════════════════════════════
 def import_spotify() -> None:
     win = tk.Toplevel(root)
@@ -811,7 +811,7 @@ def import_spotify() -> None:
               cursor="hand2", command=win.destroy).pack(pady=14)
 
 # ══════════════════════════════════════════════════════════════
-#  REFRESCO DE LISTBOX
+#                          REFRESCO DE LISTBOX
 # ══════════════════════════════════════════════════════════════
 def _refresh_list(select: int | None = None) -> None:
     listbox.delete(0, tk.END)
@@ -842,7 +842,7 @@ def _on_dbl_click(event: tk.Event) -> None:  # type: ignore[type-arg]
     load_and_play(real_idx)
 
 # ══════════════════════════════════════════════════════════════
-#  HILO DE PROGRESO
+#                          H PROGRESO
 # ══════════════════════════════════════════════════════════════
 def _ticker() -> None:
     while True:
@@ -875,7 +875,7 @@ def _song_ended() -> None:
 threading.Thread(target=_ticker, daemon=True).start()
 
 # ══════════════════════════════════════════════════════════════
-#  VARIABLES Tk  (deben existir antes de construir widgets)
+#      VARIABLES Tk  (deben existir antes de construir widgets)
 # ══════════════════════════════════════════════════════════════
 root = tk.Tk()
 root.title("LocalTune")
@@ -893,12 +893,12 @@ v_search = tk.StringVar()
 v_search.trace_add("write", apply_filter)
 
 # ══════════════════════════════════════════════════════════════
-#  LAYOUT
+#                              LAYOUT
 # ══════════════════════════════════════════════════════════════
 main_frame = tk.Frame(root, bg=T["BG_DARK"])
 main_frame.pack(fill="both", expand=True, side="top")
 
-# ─────────────────────  SIDEBAR  ─────────────────────────────
+                                                                    # ─────────────────────  SIDEBAR  ─────────────────────────────
 sidebar = tk.Frame(main_frame, bg=T["BG_PANEL"], width=228)
 sidebar.pack(side="left", fill="y")
 sidebar.pack_propagate(False)
@@ -968,7 +968,7 @@ for sb_txt, sb_cmd in [
         cursor="hand2", command=sb_cmd,
     ).pack(fill="x")
 
-# ─────────────────────  CONTENIDO  ───────────────────────────
+                                                                                # ─────────────────────  CONTENIDO  ───────────────────────────
 content = tk.Frame(main_frame, bg=T["BG_DARK"])
 content.pack(side="left", fill="both", expand=True)
 
@@ -1017,12 +1017,12 @@ search_entry = tk.Entry(
 )
 search_entry.pack(fill="x", ipady=8)
 
-def _sfocus(e: tk.Event | None = None) -> None:  # type: ignore[type-arg]
+def _sfocus(e: tk.Event | None = None) -> None:                      # type: ignore[type-arg]
     if search_entry.get() == _SEARCH_PH:
         search_entry.delete(0, tk.END)
         search_entry.config(fg=T["TEXT_MAIN"])
 
-def _sblur(e: tk.Event | None = None) -> None:   # type: ignore[type-arg]
+def _sblur(e: tk.Event | None = None) -> None:                           # type: ignore[type-arg]
     if not v_search.get():
         search_entry.insert(0, _SEARCH_PH)
         search_entry.config(fg=T["TEXT_MUTED"])
@@ -1062,7 +1062,7 @@ listbox.pack(fill="both", expand=True)
 scr.config(command=listbox.yview)
 listbox.bind("<Double-Button-1>", _on_dbl_click)
 
-# ─────────────────────  NOW PLAYING  ─────────────────────────
+                                                                    # ─────────────────────  NOW PLAYING  ─────────────────────────
 np_panel = tk.Frame(main_frame, bg=T["BG_PANEL"], width=265)
 np_panel.pack(side="right", fill="y")
 np_panel.pack_propagate(False)
@@ -1079,7 +1079,7 @@ cover_holder.pack_propagate(False)
 _def_cover = default_cover()
 cover_lbl   = tk.Label(cover_holder, image=_def_cover,
                         bg=T["BG_CARD"])
-cover_lbl.image = _def_cover   # type: ignore[attr-defined]
+cover_lbl.image = _def_cover                                                       # type: ignore[attr-defined]
 cover_lbl.place(relx=0.5, rely=0.5, anchor="center")
 
 tk.Button(np_panel, text="📷  Cambiar portada",
@@ -1122,7 +1122,7 @@ tk.Button(ar, text="➕", font=("Helvetica", 16),
           cursor="hand2", padx=10,
           command=add_to_playlist).pack(side="left")
 
-# ─────────────────────  PLAYER BAR  ──────────────────────────
+                                                        # ─────────────────────  PLAYER BAR  ──────────────────────────
 player_bar = tk.Frame(root, bg=T["BG_PANEL"], height=95)
 player_bar.pack(side="bottom", fill="x")
 player_bar.pack_propagate(False)
@@ -1131,7 +1131,7 @@ tk.Frame(player_bar, bg=T["BG_HOVER"], height=1).pack(fill="x")
 bar_inner = tk.Frame(player_bar, bg=T["BG_PANEL"])
 bar_inner.pack(fill="both", expand=True, padx=24, pady=6)
 
-# Izquierda: info canción
+                                                                # Izquierda: info canción
 li = tk.Frame(bar_inner, bg=T["BG_PANEL"], width=280)
 li.pack(side="left", fill="y")
 li.pack_propagate(False)
@@ -1142,7 +1142,7 @@ tk.Label(li, textvariable=v_artist, font=F_SMALL,
          bg=T["BG_PANEL"], fg=T["TEXT_SUB"],
          anchor="w").pack(fill="x")
 
-# Centro: controles + progreso
+                                                                # Centro: controles + progreso
 ctr = tk.Frame(bar_inner, bg=T["BG_PANEL"])
 ctr.pack(side="left", fill="both", expand=True, padx=16)
 
@@ -1188,7 +1188,7 @@ btn_rep = tk.Button(ctrl, text="🔁", font=F_BTN,
                      command=toggle_repeat)
 btn_rep.pack(side="left", padx=6)
 
-# Barra de progreso
+                                                                    # Barra de progreso
 pr = tk.Frame(ctr, bg=T["BG_PANEL"])
 pr.pack(fill="x", pady=(2, 0))
 
@@ -1207,7 +1207,7 @@ prog_slider = ttk.Scale(
     pr, from_=0, to=100, variable=v_prog,
     orient="horizontal",
     style="P.Horizontal.TScale",
-    command=lambda v: None,          # actualiza variable; seek en release
+    command=lambda v: None,                                  # actualiza variable; seek en release
 )
 prog_slider.pack(side="left", fill="x", expand=True, padx=8)
 prog_slider.bind("<ButtonRelease-1>",
@@ -1216,7 +1216,7 @@ prog_slider.bind("<ButtonRelease-1>",
 tk.Label(pr, textvariable=v_total, font=F_SMALL,
          bg=T["BG_PANEL"], fg=T["TEXT_MUTED"]).pack(side="right")
 
-# Derecha: volumen + extras
+                                                                        # Derecha: volumen + extras
 ri_f = tk.Frame(bar_inner, bg=T["BG_PANEL"], width=215)
 ri_f.pack(side="right", fill="y")
 ri_f.pack_propagate(False)
@@ -1250,13 +1250,13 @@ vol_slider = ttk.Scale(
 vol_slider.pack(side="left", padx=4)
 
 # ══════════════════════════════════════════════════════════════
-#  ATAJOS DE TECLADO
+#                          ATAJOS DE TECLADO
 # ══════════════════════════════════════════════════════════════
-def _kb_volup(e: tk.Event) -> None:    # type: ignore[type-arg]
+def _kb_volup(e: tk.Event) -> None:                                            # type: ignore[type-arg]
     new = min(100.0, v_vol.get() + 5)
     v_vol.set(new); set_volume(new)
 
-def _kb_voldown(e: tk.Event) -> None:  # type: ignore[type-arg]
+def _kb_voldown(e: tk.Event) -> None:                                          # type: ignore[type-arg]
     new = max(0.0, v_vol.get() - 5)
     v_vol.set(new); set_volume(new)
 
@@ -1271,7 +1271,7 @@ root.bind("m",        toggle_mute)
 root.bind("<Delete>", lambda e: remove_selected())
 
 # ══════════════════════════════════════════════════════════════
-#  ARRANQUE
+#                              ARRANQUE
 # ══════════════════════════════════════════════════════════════
 load_data()
 for pl_name in S.playlists:
